@@ -45,7 +45,6 @@ describe("FlagService", () => {
     expect(service.evaluate("payments", { tenantId: "tenant-a", userId: "u1" })).toBe(
       false,
     );
-    // Even with defaultEnabled true and 100% rollout, kill switch wins
     expect(service.evaluate("payments", { tenantId: "tenant-a" })).toBe(false);
   });
 
@@ -103,7 +102,6 @@ describe("FlagService", () => {
     expect(actions).toContain("enableKillSwitch");
     expect(actions).toContain("evaluate");
 
-    // Append-only: list is a copy; mutating return value does not corrupt log
     const copy = audit.list();
     copy.pop();
     expect(audit.list().length).toBe(events.length);
