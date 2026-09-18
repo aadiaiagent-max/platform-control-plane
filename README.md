@@ -52,7 +52,7 @@ const enabled = flags.evaluate("checkout-v2", {
 });
 ```
 
-**Requirements:** Node 20+, ESM. No API keys. Runtime deps: none (dev: TypeScript, Vitest, tsx).
+**Requirements:** Node 20+, ESM. No API keys. Runtime deps: none.
 
 ## Design
 
@@ -68,31 +68,31 @@ kill switch  >  rollout percent  >  defaultEnabled
 
 ### Deterministic hashing
 
-`stablePercent(seed)` uses FNV-1a over the UTF-16 code units of `seed`, mapped to `[0, 99]`. The same `(tenantId, userId, key)` always lands in the same bucket — sticky rollouts without sticky storage.
+`stablePercent(seed)` uses FNV-1a mapped to `[0, 99]`. Same `(tenantId, userId, key)` always lands in the same bucket.
 
 ### Audit
 
-Every `setFlag`, `enableKillSwitch`, `setRollout`, and `evaluate` appends an `AuditEvent`. The log never mutates or deletes prior entries; `list()` returns a defensive copy.
+Every `setFlag`, `enableKillSwitch`, `setRollout`, and `evaluate` appends an `AuditEvent`. The log never mutates or deletes prior entries.
 
 ## Layout
 
 ```
 src/
-  types.ts                 TenantId, FlagDefinition, EvalContext, AuditEvent
-  hash.ts                  stablePercent
+  types.ts
+  hash.ts
   store/InMemoryFlagStore.ts
   audit/AuditLog.ts
   flags/FlagService.ts
-  index.ts                 public exports
+  index.ts
 tests/FlagService.test.ts
 examples/basic.ts
 ```
 
 ## Roadmap
 
-- **Remote store** — Redis / Postgres-backed `FlagStore` with the same interface
-- **RBAC** — actor identity on mutations; policy gates before write
-- Signed config snapshots & webhook fan-out for edge caches
+- **Remote store** — Redis / Postgres-backed `FlagStore`
+- **RBAC** — actor identity on mutations
+- Signed config snapshots and webhook fan-out
 
 ## License
 
