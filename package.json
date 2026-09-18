@@ -1,0 +1,30 @@
+{
+  "name": "@aadiaiagent/platform-control-plane",
+  "version": "1.0.0",
+  "description": "Multi-tenant feature flags, kill switches, percentage rollouts, and append-only audit log — Principal SWE showcase control plane.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src", "LICENSE", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "example": "tsx examples/basic.ts"
+  },
+  "engines": { "node": ">=20" },
+  "keywords": ["feature-flags", "kill-switch", "rollout", "multi-tenant", "audit-log", "control-plane"],
+  "author": "aadiaiagent-max",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4",
+    "tsx": "^4.19.2"
+  }
+}
